@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 // import axios from 'axios';
 import '../styles/pages/LetterCreate.css';
 
 const LetterCreate = () => {
     const { userName } = useParams();
+    const location = useLocation();
+    const ornamentId = location.state?.ornamentId;
     const [flipCard, setFlipCard] = useState(false);
     const [formData, setFormData] = useState({
         from: '',
@@ -23,7 +25,7 @@ const LetterCreate = () => {
             // await axios.post('/api/send-letter', formData);
             setFlipCard(!flipCard);
             setTimeout(() => {
-                navigate(`/letter/${userName}`);
+                navigate(`/letter/${userName}`, { state: { ornamentId, from: formData.from } });
             }, 3000);
         } catch (error) {
             console.error('Error sending letter:', error);
