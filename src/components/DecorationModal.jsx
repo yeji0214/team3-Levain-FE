@@ -8,7 +8,7 @@ import ornamentMountainImage from '../assets/ornament/mountain.png';
 import ornamentWaveImage from '../assets/ornament/wave.png';
 import lockedIcon from '../assets/locked.png'; // 잠금 아이콘
 
-function DecorationModal({ isVisible, onClose, onSelect }) {
+function DecorationModal({ isVisible, onClose, onSelect, userName }) {
     const [selectedId, setSelectedId] = useState(null);
     const [coins, setCoins] = useState(50); // 예시로 현재 보유한 코인 설정
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
@@ -52,7 +52,7 @@ function DecorationModal({ isVisible, onClose, onSelect }) {
     const handleNext = () => {
         if (selectedId) {
             onSelect(selectedId);
-            navigate('/letter/create');
+            navigate(`/letter/${userName}/create`);
         }
     };
 

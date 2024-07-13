@@ -17,7 +17,7 @@ function App() {
           <Route path="/main" element={<Main />} />
           <Route path="/letter/my" element={<MyPage />} />
           <Route path="/letter/:userName" element={<OthersPage />} />
-          <Route path="/letter/create" element={<LetterCreate />} />
+          <Route path="/letter/:userName/create" element={<LetterCreate />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

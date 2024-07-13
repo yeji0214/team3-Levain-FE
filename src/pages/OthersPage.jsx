@@ -40,6 +40,7 @@ function OthersPage() {
                 isVisible={modalVisible}
                 onClose={handleCloseModal}
                 onSelect={handleSelectOrnament}
+                userName={userName}
             />
             <div>
                 {userName}

@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 import '../styles/pages/LetterCreate.css';
-import room from '../assets/room.png';
+import { useParams } from 'react-router-dom';
 
 const LetterCreate = () => {
+    const {userName} = useParams()
   const [flipCard, setFlipCard] = useState(false);
   const [formData, setFormData] = useState({
     from: '',
@@ -41,7 +42,7 @@ const LetterCreate = () => {
                 <div className="top-wrapper">
                   <div className="letter-receiver">
                     <label>To.</label>
-                    <div className='receiver'>베로니카</div>
+                    <div className='receiver'>{userName}</div>
                   </div>
                   <div className="input">
                     <label>From.</label>
