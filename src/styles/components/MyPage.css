@@ -1,0 +1,16 @@
+/* CSS 파일 또는 스타일 시트에 추가 */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* 스크롤을 숨김 */
+}
+
+/* 원하는 콘텐츠 스타일을 추가 (예: 배경색, 중앙 정렬 등) */
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* 배경색 설정 */
+}
