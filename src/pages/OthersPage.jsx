@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import '../styles/pages/OthersPage.css';
 import roomImage from '../assets/room.png';
-import levainImage1 from '../assets/levain.png'; // 첫 번째 돌하르방 이미지
-import levainImage2 from '../assets/levain.png'; // 두 번째 돌하르방 이미지
+import levainImage from '../assets/levain.png'; // 돌하르방 이미지
 import DecorationModal from '../components/DecorationModal';
 import searchImage from "../assets/search.png";
 import ornamentFlowerImage from '../assets/ornament/flower.png';
@@ -13,6 +12,7 @@ import ornamentMountainImage from '../assets/ornament/mountain.png';
 import ornamentWaveImage from '../assets/ornament/wave.png';
 import buttonLeftImage from '../assets/button-left.png';
 import buttonRightImage from '../assets/button-right.png';
+import axios from 'axios';
 
 const ornaments = [
     { id: 1, image: ornamentFlowerImage, name: '유채꽃' },
@@ -22,31 +22,14 @@ const ornaments = [
     { id: 5, image: ornamentFishImage, name: '고등어' }
 ];
 
-const levainData = [
-    {
-        image: levainImage1,
-        ornaments: [
-            { transform: 'translate(-200%, -70%)', id: 1 },
-            { transform: 'translate(-150%, -200%)', id: 2 },
-            { transform: 'translate(-50%, -240%)', id: 3 },
-            { transform: 'translate(60%, -200%)', id: 4 },
-            { transform: 'translate(100%, -70%)', id: 5 },
-            { transform: 'translate(-110%, 80%)', id: 1 },
-            { transform: 'translate(10%, 80%)', id: 2 }
-        ]
-    },
-    {
-        image: levainImage2,
-        ornaments: [
-            { transform: 'translate(-200%, -70%)', id: 3 },
-            { transform: 'translate(-150%, -200%)', id: 4 },
-            { transform: 'translate(-50%, -240%)', id: 1 },
-            { transform: 'translate(60%, -200%)', id: 2 },
-            { transform: 'translate(100%, -70%)', id: 3 },
-            { transform: 'translate(-110%, 80%)', id: 4 },
-            { transform: 'translate(10%, 80%)', id: 5 }
-        ]
-    }
+const positions = [
+    { transform: 'translate(-200%, -70%)' },
+    { transform: 'translate(-150%, -200%)' },
+    { transform: 'translate(-50%, -240%)' },
+    { transform: 'translate(60%, -200%)' },
+    { transform: 'translate(100%, -70%)' },
+    { transform: 'translate(-110%, 80%)' },
+    { transform: 'translate(10%, 80%)' }
 ];
 
 function OthersPage() {
@@ -68,10 +51,12 @@ function OthersPage() {
             }
         })
         .then(response => {
-            console.log('POST 요청 성공:', response.data);
+            console.log('GET 요청 성공:', response.data.content);
+            setLetters(response.data.content);
         })
         .catch(error => {
-            console.error('POST 요청 실패:', error);
+            console.error('GET 요청 실패:', error);
+            setLetters([]); // 요청 실패 시 빈 배열로 설정
         });
 
         if (location.state && location.state.ornamentId && location.state.from) {
@@ -79,7 +64,7 @@ function OthersPage() {
                 ornamentId: location.state.ornamentId,
                 from: location.state.from
             };
-            setLetters([...letters, newLetter]);
+            setLetters(prevLetters => [...prevLetters, newLetter]);
         }
         if (location.state && location.state.message) {
             alert(`새 편지: ${location.state.message}`);
@@ -99,14 +84,14 @@ function OthersPage() {
     };
 
     const handleNextLevain = () => {
-        setCurrentLevainIndex((prevIndex) => (prevIndex + 1) % levainData.length);
+        setCurrentLevainIndex((prevIndex) => (prevIndex + 1) % Math.ceil(letters.length / 7));
     };
 
     const handlePreviousLevain = () => {
-        setCurrentLevainIndex((prevIndex) => (prevIndex - 1 + levainData.length) % levainData.length);
+        setCurrentLevainIndex((prevIndex) => (prevIndex - 1 + Math.ceil(letters.length / 7)) % Math.ceil(letters.length / 7));
     };
 
-    const currentLevain = levainData[currentLevainIndex];
+    const currentLetters = Array.isArray(letters) ? letters.slice(currentLevainIndex * 7, (currentLevainIndex + 1) * 7) : [];
 
     return (
         <div className="container" style={{ backgroundImage: `url(${roomImage})` }}>
@@ -116,7 +101,7 @@ function OthersPage() {
                 className="search-button"
                 onClick={() => navigate('/main')}
             />
-            <img src={currentLevain.image} alt="돌하르방 이미지" className="levain-image" />
+            <img src={levainImage} alt="돌하르방 이미지" className="levain-image" />
             <button className="create-letter" onClick={handleOpenModal}>
                 <span>편지 쓰기</span>
             </button>
@@ -127,13 +112,13 @@ function OthersPage() {
                 userName={userName}
             />
             <div>{userName}</div>
-            {letters.slice(currentLevainIndex * 7, (currentLevainIndex + 1) * 7).map((letter, index) => {
-                const ornamentData = currentLevain.ornaments[index];
-                const ornamentImage = ornaments.find(o => o.id === letter.ornamentId)?.image;
+            {currentLetters.map((letter, index) => {
+                const position = positions[index];
+                const ornamentImage = ornaments.find(o => o.id === letter.iconNum)?.image;
                 return (
-                    <div key={index} style={{ ...ornamentData, position: 'absolute', top: '50%', left: '50%', width: '80px', height: '80px', textAlign: 'center' }}>
+                    <div key={index} style={{ ...position, position: 'absolute', top: '50%', left: '50%', width: '80px', height: '80px', textAlign: 'center' }}>
                         <img src={ornamentImage} alt={`장식 ${index + 1}`} className="ornament-image" />
-                        <div className="ornament-text">{letter.from}</div>
+                        <div className="ornament-text">{letter.writer}</div>
                     </div>
                 );
             })}

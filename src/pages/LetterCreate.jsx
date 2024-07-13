@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-// import axios from 'axios';
+import axios from 'axios';
 import '../styles/pages/LetterCreate.css';
+import { API_LETTERS } from '../config';
 
 const LetterCreate = () => {
     const { userName } = useParams();
@@ -19,19 +20,56 @@ const LetterCreate = () => {
         setFormData({ ...formData, [name]: value });
     };
 
+    const [isValid, setIsValid] = useState(false);
+
+    useEffect(() => {
+        if (formData.from && formData.message) {
+            setIsValid(true);
+        } else {
+            setIsValid(false);
+        }
+    }, [formData]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Selected Ornament ID:', ornamentId); // 콘솔에 ornamentId 출력
         try {
             // await axios.post('/api/send-letter', formData);
             setFlipCard(!flipCard);
             setTimeout(() => {
-                navigate(`/letter/${userName}`, { state: { ornamentId, from: formData.from, message: formData.message } });
+                navigate(`/letter/${userName}`, { state: { ornamentId, from: formData.from } });
             }, 3000);
         } catch (error) {
             console.error('Error sending letter:', error);
         }
     };
+
+    const buttonHandler = async(e) => {
+        
+        if (!isValid) {
+            e.preventDefault();
+            alert("모든 입력값은 필수입니다.");
+            return;
+        }
+
+        console.log(ornamentId);
+
+        try{
+            const token = localStorage.getItem("accessToken")
+            const response = await axios.post(API_LETTERS, {
+                content: formData.message,
+                writer: formData.from,
+                iconNum: ornamentId,
+                receiver: userName
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log(response);
+        } catch(error) {
+            console.error("폼 제출 중 에러 발생", error);
+        }
+    }
 
     return (
         <div id="container">
@@ -71,7 +109,7 @@ const LetterCreate = () => {
                                         ></textarea>
                                     </div>
                                     <div className="submit">
-                                        <button type="submit" className="submit-card">Send Letter</button>
+                                        <button type="submit" className="submit-card" onClick={buttonHandler}>Send Letter</button>
                                     </div>
                                 </div>
                             </form>
