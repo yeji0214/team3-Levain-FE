@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom"
+
+import { SubmitBtn } from "../components/Button"
+
 import Input from "../components/Input"
 
 function Login() {
@@ -9,15 +12,18 @@ function Login() {
                 <div className="login-notice">초기 비밀번호는</div>
                 <div className="input-section">
                     <Input
-                        placeholder="id"
+                        placeholder="아이디"
                         type="text"
                     />
                     <Input
-                        placeholder="password"
+                        placeholder="비밀번호"
                         type="password"
                     />
                 </div>
+
+                <SubmitBtn ButtonName="로그인" />
                 <Link to='/password'>비밀번호 변경</Link>
+
             </form>
         </div>
     )
