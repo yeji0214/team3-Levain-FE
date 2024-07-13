@@ -16,8 +16,8 @@
     background-color: #fff;
     padding: 20px;
     border: 1px solid #888;
-    width: 85%; /* 가로로 살짝 넓힘 */
-    max-width: 700px; /* 최대 너비를 조금 늘림 */
+    width: 75%; /* 가로 길이를 줄임 */
+    max-width: 600px;
     position: relative;
     text-align: center;
     border-radius: 10px;
@@ -56,6 +56,7 @@
     padding: 5px;
     border-radius: 5px;
     transition: transform 0.2s; /* 클릭 시 크기 변화 애니메이션 */
+    position: relative;
 }
 
 .ornament-background {
@@ -64,6 +65,7 @@
     border-radius: 5px; /* 테두리 반경 추가 */
     border: 2px solid transparent; /* 기본 테두리 */
     position: relative; /* 잠금 아이콘 배치를 위해 상대 위치 지정 */
+    transition: background-color 0.3s; /* 배경색 전환 애니메이션 */
 }
 
 .ornament-item.selected .ornament-background {
@@ -89,16 +91,26 @@
     font-size: 15px;
 }
 
+.locked-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(209, 208, 199, 0.5); /* #D1D0C7 색상에 50% 투명도 */
+    border-radius: 5px; /* 테두리 반경 추가 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .locked-icon {
     width: 50%; /* 잠금 아이콘 크기 조정 */
     height: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
-.next-button {
+.next-button,
+.purchase-button {
     background-color: #ffa500;
     color: #fff;
     border: none;
@@ -106,8 +118,43 @@
     padding: 10px 20px;
     cursor: pointer;
     font-size: 16px;
+    margin: 5px;
 }
 
-.next-button:hover {
+.next-button:hover,
+.purchase-button:hover {
     background-color: #ff8c00;
+}
+
+.purchase-modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.purchase-modal-name {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.purchase-modal-price {
+    margin-top: 5px;
+    font-size: 18px;
+    color: black;
+}
+
+.purchase-modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.current-coins {
+    font-size: 16px;
+    color: black;
+    margin-bottom: 10px;
 }
