@@ -1,18 +1,16 @@
-import React from "react";
-import "../styles/pages/Login.css";
-import { Link } from "react-router-dom";
-import { SubmitBtn } from "../components/Button";
-import Input from "../components/Input";
-import bg1 from "../assets/bg1.png";
+import { Link } from "react-router-dom"
+
+import { SubmitBtn } from "../components/Button"
+
+import Input from "../components/Input"
 
 function Login() {
     return (
         <div className="Login">
-            <div className="login-background" style={{ backgroundImage: `url(${bg1})` }}></div>
-            <form id="login-form">
+            <form>
                 <div className="login-title">로그인</div>
-                <div className="login-notice">초기 비밀번호는 <strong>1234</strong> 입니다. <br /> 비밀번호 변경 후 로그인해주세요.</div>
-                <div className="login-input-section">
+                <div className="login-notice">초기 비밀번호는</div>
+                <div className="input-section">
                     <Input
                         placeholder="아이디"
                         type="text"
@@ -22,11 +20,13 @@ function Login() {
                         type="password"
                     />
                 </div>
-                <SubmitBtn ButtonName="login" />
+
+                <SubmitBtn ButtonName="로그인" />
                 <Link to='/password'>비밀번호 변경</Link>
+
             </form>
         </div>
-    );
+    )
 }
 
-export default Login;
+export default Login

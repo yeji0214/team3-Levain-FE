@@ -1,4 +1,4 @@
-import "../styles/components/Input.css";
+// import "../style/components/InfoInput.css";
 
 function Input({type, value, placeholder}) {
     return (
