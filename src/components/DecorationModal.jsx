@@ -52,7 +52,7 @@ function DecorationModal({ isVisible, onClose, onSelect, userName }) {
     const handleNext = () => {
         if (selectedId) {
             onSelect(selectedId);
-            navigate(`/letter/${userName}/create`);
+            navigate(`/letter/${userName}/create`, { state: { ornamentId: selectedId } });
         }
     };
 

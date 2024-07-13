@@ -21,11 +21,12 @@ const LetterCreate = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('Selected Ornament ID:', ornamentId); // 콘솔에 ornamentId 출력
         try {
             // await axios.post('/api/send-letter', formData);
             setFlipCard(!flipCard);
             setTimeout(() => {
-                navigate(`/letter/${userName}`, { state: { ornamentId, from: formData.from } });
+                navigate(`/letter/${userName}`, { state: { ornamentId, from: formData.from, message: formData.message } });
             }, 3000);
         } catch (error) {
             console.error('Error sending letter:', error);

@@ -32,6 +32,9 @@ function OthersPage() {
             setSelectedOrnament(location.state.ornamentId);
             setFromName(location.state.from);
         }
+        if (location.state && location.state.message) {
+            alert(`새 편지: ${location.state.message}`);
+        }
     }, [location.state]);
 
     const handleOpenModal = () => {
@@ -43,8 +46,7 @@ function OthersPage() {
     };
 
     const handleSelectOrnament = (id) => {
-        setSelectedOrnament(id);
-        setModalVisible(false);
+        navigate(`/letter/create`, { state: { ornamentId: id } });
     };
 
     const selectedOrnamentImage = ornaments.find(o => o.id === selectedOrnament)?.image;
