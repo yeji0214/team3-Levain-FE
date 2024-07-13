@@ -40,6 +40,9 @@ const levainData = [
 
 function MyPage() {
     const [currentLevainIndex, setCurrentLevainIndex] = useState(0);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalText, setModalText] = useState('');
+    const [modalImage, setModalImage] = useState('');
 
     const handleNextLevain = () => {
         setCurrentLevainIndex((prevIndex) => (prevIndex + 1) % levainData.length);
@@ -49,8 +52,16 @@ function MyPage() {
         setCurrentLevainIndex((prevIndex) => (prevIndex - 1 + levainData.length) % levainData.length);
     };
 
-    const handleOrnamentClick = (text) => {
-        alert(text);
+    const handleOrnamentClick = (text, image) => {
+        setModalText(text);
+        setModalImage(image);
+        setModalVisible(true);
+    };
+
+    const closeModal = () => {
+        setModalVisible(false);
+        setModalText('');
+        setModalImage('');
     };
 
     const currentLevain = levainData[currentLevainIndex];
@@ -69,7 +80,7 @@ function MyPage() {
                 <div key={index} style={{ ...ornament, position: 'absolute', top: '50%', left: '50%', width: '80px', height: '80px', textAlign: 'center' }}>
                     <button
                         className="ornament-button"
-                        onClick={() => handleOrnamentClick(ornament.text)}
+                        onClick={() => handleOrnamentClick(ornament.text, ornament.image)}
                     >
                         <img src={ornament.image} alt={`장식 버튼 ${index + 1}`} className="ornament-image" />
                     </button>
@@ -86,6 +97,17 @@ function MyPage() {
             <button className="button button-right" onClick={handleNextLevain}>
                 <img src={buttonRightImage} alt="오른쪽 버튼" className="button-image" />
             </button>
+
+            {/* 모달 */}
+            {modalVisible && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close-button" onClick={closeModal}>&times;</span>
+                        <img src={modalImage} alt="장식 이미지" className="modal-image" />
+                        <p>{modalText}</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
