@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
+
 import { SubmitBtn } from "../components/Button"
+
 import Input from "../components/Input"
 
 function Login() {
@@ -18,8 +20,10 @@ function Login() {
                         type="password"
                     />
                 </div>
+
                 <SubmitBtn ButtonName="로그인" />
-                <Link to='/update'>회원가입</Link>
+                <Link to='/password'>비밀번호 변경</Link>
+
             </form>
         </div>
     )
