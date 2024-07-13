@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/pages/LoginPage.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SubmitBtn } from "../components/Button";
 import InfoInput from "../components/InfoInput";
 import bg2 from "../assets/bg2.png";
@@ -12,6 +12,7 @@ function LoginPage() {
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const nav = useNavigate()
 
     const handleUserNameChange = (e) => {
         setUserName(e.target.value);
@@ -38,12 +39,13 @@ function LoginPage() {
                 password
             });
             if (response.status === 200) {
-                    const accessToken = response.headers['authorization'];
+                const accessToken = response.data.data.token;
+                console.log(response)
                     if (accessToken) {
                         localStorage.setItem("accessToken", accessToken);
                         alert("로그인 성공");
                         setTimeout(() => {
-                            nav('/posts');
+                            nav('/main');
                         }, 1000);
                     } else {
                         alert("토큰 없음");
