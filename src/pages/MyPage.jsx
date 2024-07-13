@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DecorationModal from '../components/DecorationModal';
 import '../styles/pages/MyPage.css';
 import roomImage from '../assets/room.png';
@@ -11,9 +12,10 @@ import ornamentFishImage from '../assets/ornament/fish.png';
 import ornamentHanrabongImage from '../assets/ornament/hanrabong.png';
 import ornamentMountainImage from '../assets/ornament/mountain.png';
 import ornamentWaveImage from '../assets/ornament/wave.png';
+import searchImage from "../assets/search.png";
 
-const availableDate = new Date('2024-08-01T00:00:00'); // 예시 열람 가능 시간 (열람 불가능한 경우)
-// const availableDate = new Date('2024-07-01T00:00:00'); // 예시 열람 가능 시간 (열람 가능한 경우)
+// const availableDate = new Date('2024-08-01T00:00:00'); // 예시 열람 가능 시간 (열람 불가능한 경우)
+const availableDate = new Date('2024-07-01T00:00:00'); // 예시 열람 가능 시간 (열람 가능한 경우)
 
 const levainData = [
     {
@@ -43,6 +45,7 @@ const levainData = [
 ];
 
 function MyPage() {
+    const navigate = useNavigate();
     const [currentLevainIndex, setCurrentLevainIndex] = useState(0);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalText, setModalText] = useState('');
@@ -82,6 +85,12 @@ function MyPage() {
 
     return (
         <div className="container" style={{ backgroundImage: `url(${roomImage})` }}>
+            <img
+                src={searchImage}
+                alt="Search"
+                className="search-button"
+                onClick={() => navigate('/main')}
+            />
             {/* 현재 levainImage */}
             <img
                 src={currentLevain.image}
@@ -123,15 +132,9 @@ function MyPage() {
                     </div>
                 </div>
             )}
-
-            <DecorationModal
-                isVisible={modalVisible}
-                onClose={closeModal}
-                onSelect={(id) => console.log(`Selected ornament with id: ${id}`)}
-                currentCoins={currentCoins}
-            />
         </div>
     );
 }
 
 export default MyPage;
+

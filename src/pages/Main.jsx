@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import "../styles/pages/Main.css";
 import bg2 from "../assets/bg2.png";
 import List from "../components/List";
+import levain from "../assets/levain.png";
 
 const mockData = [
     { id: 1, userName: "haisely_jang", nickname: "헤이즐리" },
@@ -14,11 +16,22 @@ const mockData = [
 
 function Main() {
     const [names, setNames] = useState(mockData);
+    const navigate = useNavigate();
+
+    const handleLevainClick = () => {
+        navigate('/letter/my');
+    };
 
     return (
         <div className="Main" style={{ backgroundImage: `url(${bg2})` }}>
             <h1 className="Main-title">WELCOME!</h1>
             <List names={names} />
+            <img 
+                src={levain} 
+                alt="levain" 
+                className="levain-button" 
+                onClick={handleLevainClick}
+            />
         </div>
     );
 }

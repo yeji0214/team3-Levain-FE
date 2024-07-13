@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import '../styles/pages/OthersPage.css';
 import roomImage from '../assets/room.png';
 import levainImage from '../assets/levain.png';
 import DecorationModal from '../components/DecorationModal';
-
+import searchImage from "../assets/search.png";
 
 function OthersPage() {
-    const {userName} = useParams();
+    const { userName } = useParams();
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedOrnament, setSelectedOrnament] = useState(null);
+    const navigate = useNavigate();
 
     const handleOpenModal = () => {
         setModalVisible(true);
@@ -29,6 +30,12 @@ function OthersPage() {
 
     return (
         <div className="container" style={{ backgroundImage: `url(${roomImage})` }}>
+            <img
+                src={searchImage}
+                alt="Search"
+                className="search-button"
+                onClick={() => navigate('/main')}
+            />
             {/* levainImage를 가운데에 보여주는 이미지 */}
             <img src={levainImage} alt="돌하르방 이미지" className="levain-image" />
             {/* 편지 쓰기 버튼 */}

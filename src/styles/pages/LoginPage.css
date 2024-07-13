@@ -56,3 +56,12 @@
 #login-form > a:hover {
     color: #0797FF
 }
+
+.levain-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+}
