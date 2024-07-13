@@ -6,6 +6,7 @@ import MyPage from "./pages/MyPage";
 import OthersPage from "./pages/OthersPage";
 import NotFound from "./pages/NotFound";
 import LetterCreate from "./pages/LetterCreate";
+import Main from "./pages/Main";
 
 function App() {
   return (
@@ -13,9 +14,9 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
           <Route path="/password" element={<Password />} />
-          {/* <Route path="/main" element={<Main />} /> */}
+          <Route path="/main" element={<Main />} />
           <Route path="/letter/my" element={<MyPage />} />
-          <Route path="/letter/name" element={<OthersPage />} />
+          <Route path="/letter/:userName" element={<OthersPage />} />
           <Route path="/letter/create" element={<LetterCreate />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -1,0 +1,45 @@
+.list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .name-items-container {
+      position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    height: 300px;
+    max-height: 300px; /* 원하는 높이로 설정 */
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+    overflow-x: hidden; /* 가로 스크롤 비활성화 */
+    margin-top: 70px;
+    border: 1px solid black;
+  }
+  
+  /* .name-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  } */
+  
+  /* 스크롤바 스타일링 */
+  .name-items-container::-webkit-scrollbar {
+    width: 12px; /* 스크롤바의 너비 */
+  }
+  
+  .name-items-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* 스크롤바 트랙 배경색 */
+  }
+  
+  .name-items-container::-webkit-scrollbar-thumb {
+    background: #0797FF; /* 스크롤바 썸 색상 */
+    border-radius: 10px; /* 스크롤바 썸 모서리 둥글게 */
+  }
+  
+  .name-items-container::-webkit-scrollbar-thumb:hover {
+    background: #0797FF; /* 마우스를 올렸을 때 스크롤바 썸 색상 */
+  }

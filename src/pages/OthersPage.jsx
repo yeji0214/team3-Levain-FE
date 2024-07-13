@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import '../styles/pages/OthersPage.css';
 import roomImage from '../assets/room.png';
 import levainImage from '../assets/levain.png';
 import DecorationModal from '../components/DecorationModal';
 
+
 function OthersPage() {
+    const {userName} = useParams();
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedOrnament, setSelectedOrnament] = useState(null);
 
@@ -38,6 +41,9 @@ function OthersPage() {
                 onClose={handleCloseModal}
                 onSelect={handleSelectOrnament}
             />
+            <div>
+                {userName}
+            </div>
         </div>
     );
 }
