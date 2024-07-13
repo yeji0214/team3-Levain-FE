@@ -8,14 +8,12 @@ function Login() {
                 <div className="login-notice">초기 비밀번호는</div>
                 <div className="input-section">
                     <Input
-                        placeholder="id"
+                        placeholder="아이디"
                         type="text"
-                        value="id"
                     />
                     <Input
-                        placeholder="password"
+                        placeholder="비밀번호"
                         type="password"
-                        value="password"
                     />
                 </div>
             </form>
