@@ -58,11 +58,15 @@ function DecorationModal({ isVisible, onClose, onSelect }) {
         setPurchaseOrnament(null);
     };
 
+    const stopPropagation = (e) => {
+        e.stopPropagation();
+    };
+
     if (!isVisible) return null;
 
     return (
         <div className="modal" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-content" onClick={stopPropagation}>
                 {showPurchaseModal ? (
                     <>
                         <span className="close-button" onClick={closePurchaseModal}>&times;</span>
@@ -81,6 +85,7 @@ function DecorationModal({ isVisible, onClose, onSelect }) {
                     <>
                         <span className="close-button" onClick={onClose}>&times;</span>
                         <h2>르방이 장식을 골라주세요</h2>
+                        <p>보유 코인: {coins}원</p> {/* 현재 보유한 코인 표시 */}
                         <div className="ornament-container">
                             {ornaments.map((ornament) => (
                                 <div
@@ -104,6 +109,21 @@ function DecorationModal({ isVisible, onClose, onSelect }) {
                     </>
                 )}
             </div>
+            {showPurchaseModal && (
+                <div className="modal purchase-modal" onClick={closePurchaseModal}>
+                    <div className="modal-content purchase-modal-content" onClick={stopPropagation}>
+                        <span className="close-button" onClick={closePurchaseModal}>&times;</span>
+                        <img src={purchaseOrnament.image} alt={purchaseOrnament.name} className="modal-image" />
+                        <p className="purchase-modal-name">{purchaseOrnament.name}</p>
+                        <p className="purchase-modal-price">{purchaseOrnament.price}원</p>
+                        <p className="current-coins">보유 코인: {coins}원</p>
+                        <div className="purchase-modal-buttons">
+                            <button className="purchase-button" onClick={closePurchaseModal}>닫기</button>
+                            <button className="purchase-button" onClick={handlePurchase}>구매하기</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

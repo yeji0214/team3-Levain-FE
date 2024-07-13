@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DecorationModal from '../components/DecorationModal';
 import '../styles/pages/MyPage.css';
 import roomImage from '../assets/room.png';
 import levainImage1 from '../assets/levain.png'; // 첫 번째 돌하르방 이미지
@@ -10,10 +11,9 @@ import ornamentFishImage from '../assets/ornament/fish.png';
 import ornamentHanrabongImage from '../assets/ornament/hanrabong.png';
 import ornamentMountainImage from '../assets/ornament/mountain.png';
 import ornamentWaveImage from '../assets/ornament/wave.png';
-import OpenLetterModal from '../components/OpenLetterModal';
 
-// const availableDate = new Date('2024-08-01T00:00:00'); // 예시 열람 가능 시간 (열람 불가능한 경우)
-const availableDate = new Date('2024-07-01T00:00:00'); // 예시 열람 가능 시간 (열람 가능한 경우)
+const availableDate = new Date('2024-08-01T00:00:00'); // 예시 열람 가능 시간 (열람 불가능한 경우)
+// const availableDate = new Date('2024-07-01T00:00:00'); // 예시 열람 가능 시간 (열람 가능한 경우)
 
 const levainData = [
     {
@@ -48,6 +48,7 @@ function MyPage() {
     const [modalText, setModalText] = useState('');
     const [modalContent, setModalContent] = useState('');
     const [modalImage, setModalImage] = useState('');
+    const [currentCoins, setCurrentCoins] = useState(100); // 임의로 설정한 보유 코인
 
     const handleNextLevain = () => {
         setCurrentLevainIndex((prevIndex) => (prevIndex + 1) % levainData.length);
@@ -64,7 +65,7 @@ function MyPage() {
             setModalContent(content);
         } else {
             setModalText('');
-            setModalContent(`지금은 열람 시간이 아닙니다.<br>열람 가능 시간: ${availableDate.toLocaleString('ko-KR', { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}`);
+            setModalContent(`지금은 열람 시간이 아닙니다.<br />열람 가능 시간: ${availableDate.toLocaleString('ko-KR', { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}`);
         }
         setModalImage(image);
         setModalVisible(true);
@@ -112,12 +113,22 @@ function MyPage() {
             </button>
 
             {/* 모달 */}
-            <OpenLetterModal
+            {modalVisible && (
+                <div className="modal" onClick={closeModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <span className="close-button" onClick={closeModal}>&times;</span>
+                        <img src={modalImage} alt="장식 이미지" className="modal-image" />
+                        {modalText && <h3>{modalText}</h3>}
+                        <p dangerouslySetInnerHTML={{ __html: modalContent }}></p>
+                    </div>
+                </div>
+            )}
+
+            <DecorationModal
                 isVisible={modalVisible}
                 onClose={closeModal}
-                image={modalImage}
-                text={modalText}
-                content={modalContent}
+                onSelect={(id) => console.log(`Selected ornament with id: ${id}`)}
+                currentCoins={currentCoins}
             />
         </div>
     );
