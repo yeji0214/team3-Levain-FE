@@ -37,7 +37,20 @@ function LoginPage() {
                 userName,
                 password
             });
-            console.log("제출 완료", response.data);
+            if (response.status === 200) {
+                    const accessToken = response.headers['authorization'];
+                    if (accessToken) {
+                        localStorage.setItem("accessToken", accessToken);
+                        alert("로그인 성공");
+                        setTimeout(() => {
+                            nav('/posts');
+                        }, 1000);
+                    } else {
+                        alert("토큰 없음");
+                    }
+                } else {
+                    alert("로그인 실패");
+                }
         } catch (error) {
             console.error("로그인 오류", error);
             alert("로그인에 실패했습니다.");
