@@ -1,100 +1,90 @@
-// src/pages/MyPage.jsx
-
 import React, { useState } from 'react';
 import '../styles/pages/MyPage.css';
 import roomImage from '../assets/room.png';
-import levainImage1 from '../assets/levain.png';
-import levainImage2 from '../assets/levain.png';
+import levainImage1 from '../assets/levain.png'; // 첫 번째 돌하르방 이미지
+import levainImage2 from '../assets/levain.png'; // 두 번째 돌하르방 이미지
 import buttonLeftImage from '../assets/button-left.png';
 import buttonRightImage from '../assets/button-right.png';
+import ornamentFlowerImage from '../assets/ornament/flower.png';
+import ornamentFishImage from '../assets/ornament/fish.png';
+import ornamentHanrabongImage from '../assets/ornament/hanrabong.png';
+import ornamentMountainImage from '../assets/ornament/mountain.png';
+import ornamentWaveImage from '../assets/ornament/wave.png';
 
-const containerStyle = {
-    height: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-    backgroundImage: `url(${roomImage})`, // roomImage를 배경으로 설정
-    backgroundSize: 'cover', // 배경 이미지를 화면에 맞춤
-    backgroundPosition: 'center', // 배경 이미지를 가운데 정렬
-    position: 'relative', // levainImage와 버튼 이미지를 배치하기 위해 필요
-};
-
-const levainStyle = {
-    maxWidth: '45%', // levainImage의 최대 너비 설정
-    maxHeight: '45%', // levainImage의 최대 높이 설정
-    height: 'auto',
-    display: 'block',
-    margin: 'auto',
-    position: 'absolute', // levainImage를 절대 위치로 설정
-    top: '50%', // 부모 요소 중앙 정렬을 위해 세로 중앙 정렬
-    left: '50%', // 부모 요소 중앙 정렬을 위해 가로 중앙 정렬
-    transform: 'translate(-50%, -50%)', // 중앙 정렬을 위한 변형
-    transition: 'opacity 0.5s ease-in-out', // opacity 속성에 대한 transition 설정
-    opacity: 1, // 초기에는 보이도록 설정
-};
-
-const buttonStyle = {
-    position: 'absolute',
-    top: '50%', // 부모 요소 중앙 정렬을 위해 세로 중앙 정렬
-    transform: 'translateY(-50%)', // 세로로 중앙 정렬을 위한 변형
-    width: '150px', // 버튼 원의 지름 설정
-    height: '150px', // 버튼 원의 지름 설정
-    borderRadius: '50%', // 원 모양으로 만들기 위한 속성
-    border: 'none', // 테두리 없앰
-    background: 'transparent', // 배경 투명 설정
-    cursor: 'pointer', // 마우스 커서를 포인터로 변경
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-};
-
-const buttonLeftStyle = {
-    ...buttonStyle,
-    left: 'calc(50% - 500px)', // 가운데에서 왼쪽으로 470px 이동
-};
-
-const buttonRightStyle = {
-    ...buttonStyle,
-    right: 'calc(50% - 500px)', // 가운데에서 오른쪽으로 470px 이동
-};
-
-const buttonImageStyle = {
-    width: '50%', // 이미지 크기 설정
-    height: 'auto', // 높이는 자동으로 조정
-};
+const levainData = [
+    {
+        image: levainImage1,
+        ornaments: [
+            { transform: 'translate(-200%, -70%)', image: ornamentFlowerImage, text: '에리얼' },
+            { transform: 'translate(-150%, -200%)', image: ornamentFishImage, text: '토니' },
+            { transform: 'translate(-50%, -240%)', image: ornamentHanrabongImage, text: '베로니카' },
+            { transform: 'translate(60%, -200%)', image: ornamentMountainImage, text: '엘리' },
+            { transform: 'translate(100%, -70%)', image: ornamentWaveImage, text: '짭안' },
+            { transform: 'translate(-110%, 80%)', image: ornamentFlowerImage, text: '리얼이안' },
+            { transform: 'translate(10%, 80%)', image: ornamentHanrabongImage, text: '안알려줌' },
+        ],
+    },
+    {
+        image: levainImage2,
+        ornaments: [
+            { transform: 'translate(-200%, -70%)', image: ornamentMountainImage, text: '산돌' },
+            { transform: 'translate(-150%, -200%)', image: ornamentWaveImage, text: '바다' },
+            { transform: 'translate(-50%, -240%)', image: ornamentFlowerImage, text: '꽃돌' },
+            { transform: 'translate(60%, -200%)', image: ornamentFishImage, text: '물고기' },
+            { transform: 'translate(100%, -70%)', image: ornamentHanrabongImage, text: '한라봉' },
+            { transform: 'translate(-110%, 80%)', image: ornamentFishImage, text: '물돌' },
+            { transform: 'translate(10%, 80%)', image: ornamentMountainImage, text: '산' },
+        ],
+    },
+];
 
 function MyPage() {
-    const [levainImageVisible, setLevainImageVisible] = useState(true);
+    const [currentLevainIndex, setCurrentLevainIndex] = useState(0);
 
-    const toggleLevainImage = () => {
-        setLevainImageVisible((prevVisible) => !prevVisible);
+    const handleNextLevain = () => {
+        setCurrentLevainIndex((prevIndex) => (prevIndex + 1) % levainData.length);
     };
 
+    const handlePreviousLevain = () => {
+        setCurrentLevainIndex((prevIndex) => (prevIndex - 1 + levainData.length) % levainData.length);
+    };
+
+    const handleOrnamentClick = (text) => {
+        alert(text);
+    };
+
+    const currentLevain = levainData[currentLevainIndex];
+
     return (
-        <div style={containerStyle}>
-            {/* 첫 번째 levainImage */}
+        <div className="container" style={{ backgroundImage: `url(${roomImage})` }}>
+            {/* 현재 levainImage */}
             <img
-                src={levainImage1}
-                alt="돌하르방 이미지 1"
-                style={{ ...levainStyle, opacity: levainImageVisible ? 1 : 0 }}
+                src={currentLevain.image}
+                alt={`돌하르방 이미지 ${currentLevainIndex + 1}`}
+                className="levain-image"
             />
 
-            {/* 두 번째 levainImage */}
-            <img
-                src={levainImage2}
-                alt="돌하르방 이미지 2"
-                style={{ ...levainStyle, opacity: levainImageVisible ? 0 : 1 }}
-            />
+            {/* 현재 levain의 장식 이미지와 텍스트 */}
+            {currentLevain.ornaments.map((ornament, index) => (
+                <div key={index} style={{ ...ornament, position: 'absolute', top: '50%', left: '50%', width: '80px', height: '80px', textAlign: 'center' }}>
+                    <button
+                        className="ornament-button"
+                        onClick={() => handleOrnamentClick(ornament.text)}
+                    >
+                        <img src={ornament.image} alt={`장식 버튼 ${index + 1}`} className="ornament-image" />
+                    </button>
+                    <div className="ornament-text">{ornament.text}</div>
+                </div>
+            ))}
 
             {/* 왼쪽 버튼 */}
-            <button style={buttonLeftStyle} onClick={toggleLevainImage}>
-                <img src={buttonLeftImage} alt="왼쪽 버튼" style={buttonImageStyle} />
+            <button className="button button-left" onClick={handlePreviousLevain}>
+                <img src={buttonLeftImage} alt="왼쪽 버튼" className="button-image" />
             </button>
 
             {/* 오른쪽 버튼 */}
-            <button style={buttonRightStyle} onClick={toggleLevainImage}>
-                <img src={buttonRightImage} alt="오른쪽 버튼" style={buttonImageStyle} />
+            <button className="button button-right" onClick={handleNextLevain}>
+                <img src={buttonRightImage} alt="오른쪽 버튼" className="button-image" />
             </button>
         </div>
     );
