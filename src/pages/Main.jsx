@@ -36,7 +36,7 @@ function Main() {
 
     return (
         <div className="Main" style={{ backgroundImage: `url(${bg2})` }}>
-            <h1 className="Main-title">WELCOME!</h1>
+            <h1 className="Main-title">Honja Opseoye</h1>
             <List names={names} />
             <img 
                 src={levain} 

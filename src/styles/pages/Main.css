@@ -13,9 +13,9 @@
 }
 
 .Main-title {
-    font-size: 70px;
-    font-family: 'Pixelify Sans', sans-serif;
-    color: black; /* 필요에 따라 색상을 변경하세요 */
-    margin-bottom: 250px;
+    font-size: 100px;
+    font-family: "Space Mono", monospace;
+    color: #0797FF; /* 필요에 따라 색상을 변경하세요 */
+    margin-bottom: 400px;
     position: fixed;
 }
