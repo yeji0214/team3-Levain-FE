@@ -11,8 +11,8 @@ import ornamentHanrabongImage from '../assets/ornament/hanrabong.png';
 import ornamentMountainImage from '../assets/ornament/mountain.png';
 import ornamentWaveImage from '../assets/ornament/wave.png';
 
-// const availableDate = new Date('2024-08-01T00:00:00'); // 예시 열람 가능 시간 (열람 불가능한 경우)
-const availableDate = new Date('2024-07-01T00:00:00'); // 예시 열람 가능 시간 (열람 가능한 경우)
+const availableDate = new Date('2024-08-01T00:00:00'); // 예시 열람 가능 시간 (열람 불가능한 경우)
+// const availableDate = new Date('2024-07-01T00:00:00'); // 예시 열람 가능 시간 (열람 가능한 경우)
 
 const levainData = [
     {
