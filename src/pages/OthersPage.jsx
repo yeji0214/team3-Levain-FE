@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import '../styles/pages/OthersPage.css';
 import roomImage from '../assets/room.png';
-import levainImage from '../assets/levain.png';
+import levainImage1 from '../assets/levain.png'; // 첫 번째 돌하르방 이미지
+import levainImage2 from '../assets/levain.png'; // 두 번째 돌하르방 이미지
 import DecorationModal from '../components/DecorationModal';
 import searchImage from "../assets/search.png";
 import ornamentFlowerImage from '../assets/ornament/flower.png';
@@ -10,6 +11,8 @@ import ornamentFishImage from '../assets/ornament/fish.png';
 import ornamentHanrabongImage from '../assets/ornament/hanrabong.png';
 import ornamentMountainImage from '../assets/ornament/mountain.png';
 import ornamentWaveImage from '../assets/ornament/wave.png';
+import buttonLeftImage from '../assets/button-left.png';
+import buttonRightImage from '../assets/button-right.png';
 
 const ornaments = [
     { id: 1, image: ornamentFlowerImage, name: '유채꽃' },
@@ -19,18 +22,50 @@ const ornaments = [
     { id: 5, image: ornamentFishImage, name: '고등어' }
 ];
 
+const levainData = [
+    {
+        image: levainImage1,
+        ornaments: [
+            { transform: 'translate(-200%, -70%)', id: 1 },
+            { transform: 'translate(-150%, -200%)', id: 2 },
+            { transform: 'translate(-50%, -240%)', id: 3 },
+            { transform: 'translate(60%, -200%)', id: 4 },
+            { transform: 'translate(100%, -70%)', id: 5 },
+            { transform: 'translate(-110%, 80%)', id: 1 },
+            { transform: 'translate(10%, 80%)', id: 2 }
+        ]
+    },
+    {
+        image: levainImage2,
+        ornaments: [
+            { transform: 'translate(-200%, -70%)', id: 3 },
+            { transform: 'translate(-150%, -200%)', id: 4 },
+            { transform: 'translate(-50%, -240%)', id: 1 },
+            { transform: 'translate(60%, -200%)', id: 2 },
+            { transform: 'translate(100%, -70%)', id: 3 },
+            { transform: 'translate(-110%, 80%)', id: 4 },
+            { transform: 'translate(10%, 80%)', id: 5 }
+        ]
+    }
+];
+
 function OthersPage() {
     const { userName } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
     const [modalVisible, setModalVisible] = useState(false);
-    const [selectedOrnament, setSelectedOrnament] = useState(null);
+    const [currentLevainIndex, setCurrentLevainIndex] = useState(0);
+    const [letters, setLetters] = useState([]);
     const [fromName, setFromName] = useState('');
+    const [selectedOrnament, setSelectedOrnament] = useState(null);
 
     useEffect(() => {
         if (location.state && location.state.ornamentId && location.state.from) {
-            setSelectedOrnament(location.state.ornamentId);
-            setFromName(location.state.from);
+            const newLetter = {
+                ornamentId: location.state.ornamentId,
+                from: location.state.from
+            };
+            setLetters([...letters, newLetter]);
         }
         if (location.state && location.state.message) {
             alert(`새 편지: ${location.state.message}`);
@@ -49,7 +84,15 @@ function OthersPage() {
         navigate(`/letter/create`, { state: { ornamentId: id } });
     };
 
-    const selectedOrnamentImage = ornaments.find(o => o.id === selectedOrnament)?.image;
+    const handleNextLevain = () => {
+        setCurrentLevainIndex((prevIndex) => (prevIndex + 1) % levainData.length);
+    };
+
+    const handlePreviousLevain = () => {
+        setCurrentLevainIndex((prevIndex) => (prevIndex - 1 + levainData.length) % levainData.length);
+    };
+
+    const currentLevain = levainData[currentLevainIndex];
 
     return (
         <div className="container" style={{ backgroundImage: `url(${roomImage})` }}>
@@ -59,7 +102,7 @@ function OthersPage() {
                 className="search-button"
                 onClick={() => navigate('/main')}
             />
-            <img src={levainImage} alt="돌하르방 이미지" className="levain-image" />
+            <img src={currentLevain.image} alt="돌하르방 이미지" className="levain-image" />
             <button className="create-letter" onClick={handleOpenModal}>
                 <span>편지 쓰기</span>
             </button>
@@ -69,15 +112,23 @@ function OthersPage() {
                 onSelect={handleSelectOrnament}
                 userName={userName}
             />
-            <div>
-                {userName}
-            </div>
-            {selectedOrnament && (
-                <div className="selected-ornament">
-                    <img src={selectedOrnamentImage} alt="Selected Ornament" className="ornament-image" />
-                    <p className="from-name">{fromName}</p>
-                </div>
-            )}
+            <div>{userName}</div>
+            {letters.slice(currentLevainIndex * 7, (currentLevainIndex + 1) * 7).map((letter, index) => {
+                const ornamentData = currentLevain.ornaments[index];
+                const ornamentImage = ornaments.find(o => o.id === letter.ornamentId)?.image;
+                return (
+                    <div key={index} style={{ ...ornamentData, position: 'absolute', top: '50%', left: '50%', width: '80px', height: '80px', textAlign: 'center' }}>
+                        <img src={ornamentImage} alt={`장식 ${index + 1}`} className="ornament-image" />
+                        <div className="ornament-text">{letter.from}</div>
+                    </div>
+                );
+            })}
+            <button className="button button-left" onClick={handlePreviousLevain}>
+                <img src={buttonLeftImage} alt="왼쪽 버튼" className="button-image" />
+            </button>
+            <button className="button button-right" onClick={handleNextLevain}>
+                <img src={buttonRightImage} alt="오른쪽 버튼" className="button-image" />
+            </button>
         </div>
     );
 }
