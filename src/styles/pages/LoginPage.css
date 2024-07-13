@@ -1,0 +1,58 @@
+.Login {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* 
+.login-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5;
+    z-index: 1;
+} */
+
+#login-form {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 500px;
+    height: 600px;
+}
+
+.login-title {
+    font-size: 40px;
+    font-weight: 700;
+    margin-top: 70px;
+    margin-bottom: 30px;
+}
+
+.login-notice{
+    color: #494848;
+}
+
+.login-input-section{
+    margin: 50px 0;
+}
+
+#login-form > a {
+    display: block;  /* display 속성 추가 */
+    margin-top: 20px;
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+#login-form > a:hover {
+    color: #0797FF
+}
