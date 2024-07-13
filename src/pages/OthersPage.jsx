@@ -60,6 +60,20 @@ function OthersPage() {
     const [selectedOrnament, setSelectedOrnament] = useState(null);
 
     useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        const apiEndpoint = `http://localhost:8080/api/letters?page=0&userName=${userName}`;
+        axios.get(apiEndpoint, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            console.log('POST 요청 성공:', response.data);
+        })
+        .catch(error => {
+            console.error('POST 요청 실패:', error);
+        });
+
         if (location.state && location.state.ornamentId && location.state.from) {
             const newLetter = {
                 ornamentId: location.state.ornamentId,
@@ -70,7 +84,7 @@ function OthersPage() {
         if (location.state && location.state.message) {
             alert(`새 편지: ${location.state.message}`);
         }
-    }, [location.state]);
+    }, [location.state, userName]);
 
     const handleOpenModal = () => {
         setModalVisible(true);
