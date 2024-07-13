@@ -1,9 +1,7 @@
-import "../styles/components/Button.css"
-
-export const SubmitBtn = ({ ButtonName }) => {
+export const SubmitBtn = ({ButtonName, onClick}) => {
     return (
         <div className="SubmitBtn-Box">
-            <button className="submitBtn">{ButtonName}</button>
+            <button className="submitBtn" onClick={onClick}>{ButtonName}</button>
         </div>
 
     )

@@ -1,33 +1,27 @@
-import React from "react";
-import "../styles/pages/Password.css";
-import { SubmitBtn } from "../components/Button";
-import Input from "../components/Input";
-import bg1 from "../assets/bg1.png";
+import Input from "../components/Input"
 
 function Password() {
     return (
-        <div className="Password">
-            <div className="password-background" style={{backgroundImage: `url(${bg1})`}}></div>
-            <form id="password-form">
-                <div className="password-title">비밀번호 변경</div>
-                <div className="password-input-section">
+        <div className="Login">
+            <form>
+                <div className="login-title">비밀번호 변경</div>
+                <div className="input-section">
                     <Input
-                        placeholder="현재 비밀번호"
+                        placeholder="id"
+                        type="text"
+                    />
+                    <Input
+                        placeholder="password"
                         type="password"
                     />
                     <Input
-                        placeholder="새 비밀번호"
-                        type="password"
-                    />
-                    <Input
-                        placeholder="새 비밀번호 확인"
+                        placeholder="password"
                         type="password"
                     />
                 </div>
-                <SubmitBtn ButtonName="submit" />
             </form>
         </div>
     )
 }
 
-export default Password;
+export default Password
