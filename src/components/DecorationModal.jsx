@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/components/DecorationModal.css';
 import ornamentFlowerImage from '../assets/ornament/flower.png';
 import ornamentFishImage from '../assets/ornament/fish.png';
@@ -13,6 +14,7 @@ function DecorationModal({ isVisible, onClose, onSelect }) {
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
     const [purchaseOrnament, setPurchaseOrnament] = useState(null);
     const [unlockedOrnaments, setUnlockedOrnaments] = useState([1, 2, 3]); // 기본적으로 잠금 해제된 장식들
+    const navigate = useNavigate();
 
     const ornaments = [
         { id: 1, image: ornamentFlowerImage, name: '유채꽃', locked: false },
@@ -50,6 +52,7 @@ function DecorationModal({ isVisible, onClose, onSelect }) {
     const handleNext = () => {
         if (selectedId) {
             onSelect(selectedId);
+            navigate('/letter/create');
         }
     };
 
@@ -65,11 +68,11 @@ function DecorationModal({ isVisible, onClose, onSelect }) {
     if (!isVisible) return null;
 
     return (
-        <div className="modal" onClick={onClose}>
-            <div className="modal-content" onClick={stopPropagation}>
+        <div className="decoration-modal" onClick={onClose}>
+            <div className="decoration-modal-content" onClick={stopPropagation}>
                 {showPurchaseModal ? (
                     <>
-                        <span className="close-button" onClick={closePurchaseModal}>&times;</span>
+                        <span className="decoration-close-button" onClick={closePurchaseModal}>&times;</span>
                         <div className="purchase-modal-content">
                             <img src={purchaseOrnament.image} alt={purchaseOrnament.name} className="modal-image" />
                             <p className="purchase-modal-name">{purchaseOrnament.name}</p>
@@ -83,7 +86,7 @@ function DecorationModal({ isVisible, onClose, onSelect }) {
                     </>
                 ) : (
                     <>
-                        <span className="close-button" onClick={onClose}>&times;</span>
+                        <span className="decoration-close-button" onClick={onClose}>&times;</span>
                         <h2>르방이 장식을 골라주세요</h2>
                         <p>보유 코인: {coins}원</p> {/* 현재 보유한 코인 표시 */}
                         <div className="ornament-container">
@@ -105,14 +108,14 @@ function DecorationModal({ isVisible, onClose, onSelect }) {
                                 </div>
                             ))}
                         </div>
-                        <button className="next-button" onClick={handleNext}>다음</button>
+                        <button className="decoration-next-button" onClick={handleNext}>다음</button>
                     </>
                 )}
             </div>
             {showPurchaseModal && (
-                <div className="modal purchase-modal" onClick={closePurchaseModal}>
-                    <div className="modal-content purchase-modal-content" onClick={stopPropagation}>
-                        <span className="close-button" onClick={closePurchaseModal}>&times;</span>
+                <div className="decoration-modal-overlay" onClick={closePurchaseModal}>
+                    <div className="decoration-modal-content purchase-modal-content" onClick={stopPropagation}>
+                        <span className="decoration-close-button" onClick={closePurchaseModal}>&times;</span>
                         <img src={purchaseOrnament.image} alt={purchaseOrnament.name} className="modal-image" />
                         <p className="purchase-modal-name">{purchaseOrnament.name}</p>
                         <p className="purchase-modal-price">{purchaseOrnament.price}원</p>

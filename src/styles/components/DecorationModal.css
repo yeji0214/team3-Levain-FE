@@ -1,4 +1,4 @@
-.modal {
+.decoration-modal {
     position: fixed;
     z-index: 1;
     left: 0;
@@ -12,19 +12,19 @@
     align-items: center;
 }
 
-.modal-content {
+.decoration-modal-content {
     background-color: #fff;
     padding: 20px;
     border: 1px solid #888;
-    width: 85%; 
-    max-width: 700px; 
+    width: 85%; /* 가로 길이를 넓힘 */
+    max-width: 700px; /* 최대 너비를 더 넓힘 */
     position: relative;
     text-align: center;
     border-radius: 10px;
     background-color: #ffd700;
 }
 
-.modal-overlay {
+.decoration-modal-overlay {
     position: fixed;
     z-index: 2;
     left: 0;
@@ -37,7 +37,7 @@
     align-items: center;
 }
 
-.close-button {
+.decoration-close-button {
     color: red;
     float: right;
     font-size: 28px;
@@ -48,8 +48,8 @@
     cursor: pointer;
 }
 
-.close-button:hover,
-.close-button:focus {
+.decoration-close-button:hover,
+.decoration-close-button:focus {
     color: black;
     text-decoration: none;
 }
@@ -63,31 +63,31 @@
 }
 
 .ornament-item {
-    width: 100px;
+    width: 100px; /* 너비 조정 */
     text-align: center;
     cursor: pointer;
     padding: 5px;
     border-radius: 5px;
-    transition: transform 0.2s;
+    transition: transform 0.2s; /* 클릭 시 크기 변화 애니메이션 */
     position: relative;
 }
 
 .ornament-background {
-    background-color: #FFF8D1; 
-    padding: 5px; 
-    border-radius: 5px; 
-    border: 2px solid transparent;
-    position: relative; 
-    transition: background-color 0.3s;
+    background-color: #FFF8D1; /* 배경색 추가 */
+    padding: 5px; /* 패딩 추가 */
+    border-radius: 5px; /* 테두리 반경 추가 */
+    border: 2px solid transparent; /* 기본 테두리 */
+    position: relative; /* 잠금 아이콘 배치를 위해 상대 위치 지정 */
+    transition: background-color 0.3s; /* 배경색 전환 애니메이션 */
 }
 
 .ornament-item.selected .ornament-background {
-    border-color: #ffa500; 
+    border-color: #ffa500; /* 선택된 항목의 테두리 색상 */
     border-width: 3px;
 }
 
 .ornament-item.selected {
-    transform: scale(1.1); 
+    transform: scale(1.1); /* 선택된 항목의 크기를 1.1배 확대 */
 }
 
 .ornament-image {
@@ -97,11 +97,11 @@
 }
 
 .ornament-text {
-    /* text-align: center;
-    margin-top: 5px;
-    color: black;
-    background: #FFD700;
-    font-size: 15px; */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    margin-top: 5px; /* 이미지와 텍스트 사이의 마진 */
+    color: black; /* 텍스트 색깔 검은색 */
+    background: #FFD700; /* 배경색 추가 */
+    font-size: 15px;
 }
 
 .locked-overlay {
@@ -110,19 +110,19 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(209, 208, 199, 0.5);
-    border-radius: 5px;
+    background-color: rgba(209, 208, 199, 0.5); /* #D1D0C7 색상에 50% 투명도 */
+    border-radius: 5px; /* 테두리 반경 추가 */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .locked-icon {
-    width: 50%; 
+    width: 50%; /* 잠금 아이콘 크기 조정 */
     height: auto;
 }
 
-.next-button,
+.decoration-next-button,
 .purchase-button {
     background-color: #ffa500;
     color: #fff;
@@ -134,7 +134,7 @@
     margin: 5px;
 }
 
-.next-button:hover,
+.decoration-next-button:hover,
 .purchase-button:hover {
     background-color: #ff8c00;
 }
@@ -144,14 +144,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 75%; /* 가로 길이를 줄임 */
-    max-width: 600px;
-    position: relative;
-    text-align: center;
-    border-radius: 10px;
-    background-color: #ffd700;
 }
 
 .purchase-modal-name {
