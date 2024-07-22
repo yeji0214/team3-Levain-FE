@@ -64,7 +64,7 @@ function LoginPage() {
             <form id="login-form" onSubmit={handleSubmit}>
                 <div className="login-title">로그인</div>
                 <div className="login-notice">
-                    초기 비밀번호는 <strong>1234</strong> 입니다. <br /> 비밀번호 변경 후 로그인해주세요.
+                    초기 비밀번호는 <strong>00000000</strong> 입니다. <br /> 비밀번호 변경 후 로그인해주세요.
                 </div>
                 <div className="login-input-section">
                     <InfoInput

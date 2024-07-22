@@ -21,12 +21,12 @@ const levainData = [
     {
         image: levainImage1,
         ornaments: [
-            { transform: 'translate(-200%, -70%)', image: ornamentFlowerImage, text: '에리얼', content: '저희 르방이 많이 사랑해주세요~~~' },
-            { transform: 'translate(-150%, -200%)', image: ornamentFishImage, text: '토니', content: '제가 발표를 기깔나게 해보겠습니다 다들 걱정 ㄴㄴ' },
-            { transform: 'translate(-50%, -240%)', image: ornamentHanrabongImage, text: '베로니카', content: '야무지고 화려한 css는 내 담당' },
-            { transform: 'translate(60%, -200%)', image: ornamentMountainImage, text: '엘리', content: '백엔드? SO EASY~' },
+            { transform: 'translate(-200%, -70%)', image: ornamentFlowerImage, text: '뿡뿡이', content: '저희 르방이 많이 사랑해주세요~~~' },
+            { transform: 'translate(-150%, -200%)', image: ornamentFishImage, text: '거울', content: '제가 발표를 기깔나게 해보겠습니다 다들 걱정 ㄴㄴ' },
+            { transform: 'translate(-50%, -240%)', image: ornamentHanrabongImage, text: '불주먹', content: '야무지고 화려한 css는 내 담당' },
+            { transform: 'translate(60%, -200%)', image: ornamentMountainImage, text: '엘깅', content: '백엔드? SO EASY~' },
             { transform: 'translate(100%, -70%)', image: ornamentWaveImage, text: '짭안', content: '저 이안이에요' },
-            { transform: 'translate(-110%, 80%)', image: ornamentFlowerImage, text: '리얼이안', content: '아니다 내가 진짜다..' },
+            { transform: 'translate(-110%, 80%)', image: ornamentFlowerImage, text: '인어공주', content: '아니다 내가 진짜다..' },
             { transform: 'translate(10%, 80%)', image: ornamentHanrabongImage, text: '보이드', content: '먹고 씻고 연애하고 사회생활을 하는 건 코딩 시간에 방해가 됩니다. 먹고 씻고 연애하고 사회생활을 하는 건 코딩 시간에 방해가 됩니다. 먹고 씻고 연애하고 사회생활을 하는 건 코딩 시간에 방해가 됩니다. 먹고 씻고 연애하고 사회생활을 하는 건 코딩 시간에 방해가 됩니다. 먹고 씻고 연애하고 사회생활을 하는 건 코딩 시간에 방해가 됩니다 !!!!!!!!!!!' },
         ],
     },
