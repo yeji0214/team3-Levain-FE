@@ -1,0 +1,101 @@
+.UserModal {
+    box-sizing: border-box;
+    width: 170px;
+    height: 220px;
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    border-radius: 15px;
+    top: 110px;
+    right: 30px;
+    padding-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+                0 6px 20px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease;
+}
+
+.UserModal.show {
+    opacity: 1;
+}
+
+
+.UserModal > p {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+.coin-section {
+    font-size: 15px;
+    color: #818181;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.myPage-section, .logout-section {
+    width: 170px;
+    height: 55px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease, font-weight 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    background-color: #989696;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15px;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.icon > img {
+    width: 20px;
+    height: 20px;
+}
+
+.myPage-section > span, .logout-section > span {
+    font-size: 18px;
+    font-weight: 500;
+    transition: font-weight 0.3s ease;
+}
+
+.myPage-section:hover {
+    background-color: rgba(4, 151, 255, 0.3);
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logout-section:hover {
+    background-color: rgba(230, 67, 67, 0.3);
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.myPage-section:hover .icon {
+    background-color: #0497FF;
+}
+
+.logout-section:hover .icon {
+    background-color: #E64343;
+}
+
+.myPage-section:hover span {
+    color: #0497FF;
+}
+
+.logout-section:hover span {
+    color: #E64343;
+}
+
+.myPage-section:hover span, .logout-section:hover span {
+    font-weight: 800;
+}

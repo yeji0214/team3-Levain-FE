@@ -19,3 +19,27 @@
     margin-bottom: 400px;
     position: fixed;
 }
+
+.Main > img{
+    position: absolute;
+    right: 40px;
+    top: 30px
+}
+
+.letter-cnt{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    font-size: 14px;
+    font-weight: 800;
+    z-index: 999;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 30px;
+    right: 45px
+}
