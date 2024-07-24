@@ -9,13 +9,22 @@ import { API_LOGIN } from "../config";
 import axios from "axios";
 
 function LoginPage() {
-    const [userName, setUserName] = useState("")
+    const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
-    const nav = useNavigate()
+    const [userNameHelper, setUserNameHelper] = useState("");
+    const nav = useNavigate();
 
     const handleUserNameChange = (e) => {
         setUserName(e.target.value);
+    };
+
+    const handleUserNameFocus = () => {
+        setUserNameHelper("아이디는 '영어이름_성' 입니다.");
+    };
+
+    const handleUserNameBlur = () => {
+        setUserNameHelper("");
     };
 
     const handlePasswordChange = (e) => {
@@ -40,19 +49,19 @@ function LoginPage() {
             });
             if (response.status === 200) {
                 const accessToken = response.data.data.token;
-                console.log(response)
-                    if (accessToken) {
-                        localStorage.setItem("accessToken", accessToken);
-                        alert("로그인 성공");
-                        setTimeout(() => {
-                            nav('/main');
-                        }, 1000);
-                    } else {
-                        alert("토큰 없음");
-                    }
+                console.log(response);
+                if (accessToken) {
+                    localStorage.setItem("accessToken", accessToken);
+                    alert("로그인 성공");
+                    setTimeout(() => {
+                        nav('/main');
+                    }, 1000);
                 } else {
-                    alert("로그인 실패");
+                    alert("토큰 없음");
                 }
+            } else {
+                alert("로그인 실패");
+            }
         } catch (error) {
             console.error("로그인 오류", error);
             alert("로그인에 실패했습니다.");
@@ -64,16 +73,18 @@ function LoginPage() {
             <form id="login-form" onSubmit={handleSubmit}>
                 <div className="login-title">로그인</div>
                 <div className="login-notice">
-                    초기 비밀번호는 <strong>00000000</strong> 입니다. <br /> 비밀번호 변경 후 로그인해주세요.
+                    초기 비밀번호는 <strong>0000</strong> 입니다. <br /> 비밀번호 변경 후 로그인해주세요.
                 </div>
                 <div className="login-input-section">
                     <InfoInput
                         placeholder="아이디"
                         type="text"
-                        helper="아이디는 '영어이름_성' 입니다."
+                        helper={userNameHelper}
                         marginRight="220px"
                         value={userName}
                         onChange={handleUserNameChange}
+                        onFocus={handleUserNameFocus}
+                        onBlur={handleUserNameBlur}
                     />
                     <InfoInput
                         placeholder="비밀번호"
@@ -84,7 +95,7 @@ function LoginPage() {
                         onChange={handlePasswordChange}
                     />
                 </div>
-                <SubmitBtn ButtonName="login"/>
+                <SubmitBtn ButtonName="login" />
                 <Link to='/password'>비밀번호 변경</Link>
             </form>
         </div>
