@@ -16,9 +16,17 @@ function UserModal() {
                 onClick={()=>nav("/letter/my")}
                 className="myPage-section">
                 <div className="icon">
-                    <img src= "src/assets/user.png"/>
+                    <img src= "src/assets/mail.png"/>
                 </div>
-                <span>My Page</span>
+                <span>내 편지함</span>
+            </div>
+            <div
+                onClick={()=>nav("/password")}
+                className="password-section">
+                <div className="icon">
+                    <img src= "src/assets/padlock.png"/>
+                </div>
+                <span>비밀번호 수정</span>
             </div>
             <div
                 onClick={() => {
@@ -29,7 +37,7 @@ function UserModal() {
                 <div className="icon">
                     <img src="src/assets/logout.png" />
                 </div>
-                <span>Logout</span>
+                <span>로그아웃</span>
             </div>
         </div>
     )
