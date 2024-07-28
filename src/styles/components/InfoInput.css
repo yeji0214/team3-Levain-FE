@@ -1,6 +1,7 @@
 .InfoInputBox {
     position: relative;
-    margin: 15px 0;
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 
 .InputBoxContent {
