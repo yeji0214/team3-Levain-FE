@@ -4,7 +4,7 @@ import { SubmitBtn } from "../components/Button";
 import InfoInput from "../components/InfoInput";
 import bg2 from "../assets/bg2.png";
 import axios from "axios";
-import { API_PASSWORDCHECK, API_PASSWORD } from "../config";
+import { API_PASSWORD, API_PASSWORD_CHECK } from "../config";
 
 function Password() {
     const [currentPwd, setCurrentPwd] = useState("");
@@ -42,38 +42,37 @@ function Password() {
         }
 
         try {
-            const response = await axios.post(API_PASSWORDCHECK, { password: currentPwd }, {
+            await axios.post(API_PASSWORD_CHECK, { oldPassword: currentPwd }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-
-            if (response.status === 200) {
-                setCurrentPwdHelper("");
-            } else {
-                setCurrentPwdHelper("현재 비밀번호가 일치하지 않습니다.");
-            }
+            setCurrentPwdHelper("");
         } catch (error) {
-            setCurrentPwdHelper("비밀번호 확인 중 오류가 발생했습니다.");
+            if (error.response && error.response.status === 400) {
+                setCurrentPwdHelper("현재 비밀번호가 올바르지 않습니다.");
+            } else {
+                setCurrentPwdHelper("비밀번호 확인 중 오류가 발생했습니다.");
+            }
         }
-    };
-
-    const validateNewPassword = (password) => {
-        const regex = /^\d{4,6}$/; // 4-6자리 숫자
-        return regex.test(password);
     };
 
     const validateForm = (password, confirmPassword) => {
-        if (!validateNewPassword(password)) {
-            setNewPwdHelper("비밀번호는 4-6자리 숫자로만 이루어져야 합니다.");
+        const { isValid: isPwdValid, message: pwdMessage } = validateNewPassword(password);
+        const { isValid: isMatchValid, message: matchMessage } = validatePasswordMatch(password, confirmPassword);
+
+        if (!isPwdValid) {
+            setNewPwdHelper(pwdMessage);
             setIsValid(false);
             return;
         }
-        if (password !== confirmPassword) {
-            setNewPwdConfirmHelper("비밀번호가 일치하지 않습니다.");
+
+        if (!isMatchValid) {
+            setNewPwdConfirmHelper(matchMessage);
             setIsValid(false);
             return;
         }
+
         setIsValid(true);
         setNewPwdHelper("");
         setNewPwdConfirmHelper("");
@@ -94,7 +93,7 @@ function Password() {
         }
 
         try {
-            const changeResponse = await axios.post(API_PASSWORD, { newPassword: newPwd, newPasswordCheck: newPwdConfirm }, {
+            const changeResponse = await axios.put(API_PASSWORD, { oldPassword: currentPwd, newPassword: newPwd, newPasswordCheck: newPwdConfirm }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -112,8 +111,48 @@ function Password() {
                 setCurrentPwdHelper("비밀번호 변경에 실패했습니다.");
             }
         } catch (error) {
-            setCurrentPwdHelper("비밀번호 변경 중 오류가 발생했습니다.");
+            console.error("비밀번호 변경 중 오류가 발생했습니다.", error);
+            alert("비밀번호 변경 중 오류가 발생했습니다.");
         }
+    };
+
+    const validateCurrentPassword = async (password) => {
+        const token = localStorage.getItem("accessToken");
+        if (!token) {
+            return { isValid: false, message: "토큰이 없습니다. 다시 로그인해주세요." };
+        }
+
+        try {
+            const response = await axios.post(API_PASSWORD_CHECK, { password }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if (response.status === 200) {
+                return { isValid: true, message: "" };
+            } else {
+                return { isValid: false, message: "현재 비밀번호가 일치하지 않습니다." };
+            }
+        } catch (error) {
+            console.error("비밀번호 확인 중 오류가 발생했습니다.", error);
+            return { isValid: false, message: "비밀번호 확인 중 오류가 발생했습니다." };
+        }
+    };
+
+    const validateNewPassword = (password) => {
+        const regex = /^\d{4,6}$/; // 4-6자리 숫자
+        if (!regex.test(password)) {
+            return { isValid: false, message: "비밀번호는 4-6자리 숫자로만 이루어져야 합니다." };
+        }
+        return { isValid: true, message: "" };
+    };
+
+    const validatePasswordMatch = (password, confirmPassword) => {
+        if (password !== confirmPassword) {
+            return { isValid: false, message: "비밀번호가 일치하지 않습니다." };
+        }
+        return { isValid: true, message: "" };
     };
 
     return (
@@ -128,6 +167,7 @@ function Password() {
                         onChange={handleCurrentPwdChange}
                         onBlur={handleCurrentPwdBlur}
                         helper={currentPwdHelper}
+                        marginRight="195px"
                     />
                     <InfoInput
                         placeholder="새 비밀번호"
@@ -135,6 +175,7 @@ function Password() {
                         value={newPwd}
                         onChange={handleNewPwdChange}
                         helper={newPwdHelper}
+                        marginRight="125px"
                     />
                     <InfoInput
                         placeholder="새 비밀번호 확인"
@@ -142,6 +183,7 @@ function Password() {
                         value={newPwdConfirm}
                         onChange={handleNewPwdConfirmChange}
                         helper={newPwdConfirmHelper}
+                        marginRight="220px"
                     />
                 </div>
                 <SubmitBtn ButtonName="submit" />
