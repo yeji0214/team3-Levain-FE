@@ -2,15 +2,15 @@ import { useNavigate } from "react-router-dom"
 import "../styles/components/UserModal.css"
 import { useState, useEffect } from "react"
 
-function UserModal() {
+function UserModal({user}) {
     const nav = useNavigate()
     
     return (
         <div className="UserModal">
             <p>안녕하세요 👋</p>
-            <p><strong>베로니카 </strong> 님!</p>
+            <p><strong>{user.nickname} </strong> 님!</p>
             <div className="coin-section">
-                보유코인 : 30
+                보유코인 : {user.reward}
             </div>
             <div
                 onClick={()=>nav("/letter/my")}
