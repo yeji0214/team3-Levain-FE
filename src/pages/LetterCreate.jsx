@@ -8,6 +8,7 @@ const LetterCreate = () => {
     const { userName } = useParams();
     const location = useLocation();
     const ornamentId = location.state?.ornamentId;
+    const ornamentImage = location.state?.ornamentImage; // 추가된 장식 이미지 상태
     const [flipCard, setFlipCard] = useState(false);
     const [formData, setFormData] = useState({
         from: '',
@@ -33,10 +34,9 @@ const LetterCreate = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         try {
-            // await axios.post('/api/send-letter', formData);
             setFlipCard(!flipCard);
             setTimeout(() => {
-                navigate(`/letter/${userName}`, { state: { ornamentId, from: formData.from } });
+                navigate(`/letter/${userName}`, { state: { ornamentId, from: formData.from, ornamentImage } }); // ornamentImage 전달
             }, 3000);
         } catch (error) {
             console.error('Error sending letter:', error);
@@ -44,7 +44,6 @@ const LetterCreate = () => {
     };
 
     const buttonHandler = async(e) => {
-        
         if (!isValid) {
             e.preventDefault();
             alert("모든 입력값은 필수입니다.");
@@ -53,7 +52,7 @@ const LetterCreate = () => {
 
         console.log(ornamentId);
 
-        try{
+        try {
             const token = localStorage.getItem("accessToken")
             const response = await axios.post(API_LETTERS, {
                 content: formData.message,
