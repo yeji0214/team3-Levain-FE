@@ -29,6 +29,8 @@ function OthersPage2() {
     const [currentPage, setCurrentPage] = useState(0);
     const [letters, setLetters] = useState([]);
     const [loggedInUserName, setLoggedInUserName] = useState('');
+    const [hasNext, setHasNext] = useState(false);
+    const [hasPrevious, setHasPrevious] = useState(false);
 
     const token = localStorage.getItem('accessToken');
 
@@ -64,9 +66,12 @@ function OthersPage2() {
                     Authorization: `Bearer ${token}`
                 }
             });
+            console.log(response.data);
             console.log('편지 리스트:', response.data.data.content);
             const lettersData = response.data.data.content;
             setLetters(lettersData);
+            setHasNext(response.data.data.hasNext);
+            setHasPrevious(response.data.data.hasPrevious);
         } catch (error) {
             console.error('GET 요청 실패:', error);
             setLetters([]);
@@ -140,12 +145,16 @@ function OthersPage2() {
                     </div>
                 );
             })}
-            <button className="button button-left" onClick={handlePreviousLevain}>
-                <img src={buttonLeftImage} alt="왼쪽 버튼" className="button-image" />
-            </button>
-            <button className="button button-right" onClick={handleNextLevain}>
-                <img src={buttonRightImage} alt="오른쪽 버튼" className="button-image" />
-            </button>
+            {hasPrevious && (
+                <button className="button button-left" onClick={handlePreviousLevain}>
+                    <img src={buttonLeftImage} alt="왼쪽 버튼" className="button-image" />
+                </button>
+            )}
+            {hasNext && (
+                <button className="button button-right" onClick={handleNextLevain}>
+                    <img src={buttonRightImage} alt="오른쪽 버튼" className="button-image" />
+                </button>
+            )}
         </div>
     );
 }
