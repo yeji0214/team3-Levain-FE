@@ -2,23 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import '../styles/pages/OthersPage.css';
 import roomImage from '../assets/room.png';
-import levainImage from '../assets/levain.png'; // 돌하르방 이미지
+import levainImage from '../assets/levain.png';
 import DecorationModal from '../components/DecorationModal';
 import searchImage from "../assets/search.png";
-
 import buttonLeftImage from '../assets/button-left.png';
 import buttonRightImage from '../assets/button-right.png';
 import axios from 'axios';
-import { API_LETTERS, API_USER_ME } from '../config'; // 필요한 API URL 임포트
+import { API_LETTERS, API_USER_ME } from '../config';
 
 const positions = [
-    { transform: 'translate(-200%, -70%)' },
-    { transform: 'translate(-150%, -200%)' },
-    { transform: 'translate(-50%, -240%)' },
-    { transform: 'translate(60%, -200%)' },
-    { transform: 'translate(100%, -70%)' },
-    { transform: 'translate(-110%, 80%)' },
-    { transform: 'translate(10%, 80%)' }
+    { transform: 'translate(-220%, -60%)' },
+    { transform: 'translate(-180%, -200%)' },
+    { transform: 'translate(-55%, -290%)' },
+    { transform: 'translate(80%, -200%)' },
+    { transform: 'translate(120%, -60%)' },
+    { transform: 'translate(-135%, 80%)' },
+    { transform: 'translate(30%, 80%)' }
 ];
 
 function OthersPage2() {
@@ -66,7 +65,6 @@ function OthersPage2() {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log(response.data);
             console.log('편지 리스트:', response.data.data.content);
             const lettersData = response.data.data.content;
             setLetters(lettersData);
@@ -76,7 +74,7 @@ function OthersPage2() {
             console.error('GET 요청 실패:', error);
             setLetters([]);
         }
-    };
+    }
 
     useEffect(() => {
         if (location.state && location.state.ornamentId && location.state.from) {
@@ -101,6 +99,7 @@ function OthersPage2() {
     };
 
     const handleSelectOrnament = (id) => {
+        console.log("선택한 장식 ID : ", id)
         navigate(`/letter/create`, { state: { ornamentId: id } });
     };
 
@@ -139,8 +138,8 @@ function OthersPage2() {
             {currentLetters.map((letter, index) => {
                 const position = positions[index];
                 return (
-                    <div key={letter.letterId} style={{ ...position, position: 'absolute', top: '50%', left: '50%', width: '80px', height: '80px', textAlign: 'center' }}>
-                        {letter.iconPath && <img src={`http://localhost:8080${letter.iconPath}`} alt={`장식 ${index + 1}`} className="ornament-image" style={{ width: '100%', height: '100%' }} />}
+                    <div key={letter.letterId} style={{ ...position, position: 'absolute', top: '50%', left: '50%', width: '80px', height: '80px', textAlign: 'center'}}>
+                        {letter.iconPath && <img src={`http://localhost:8080${letter.iconPath}`} alt={`장식 ${index + 1}`} className="ornament-image" style={{ width: '100%', height: '100%'}} />}
                         <div className="ornament-text">{letter.writer}</div>
                     </div>
                 );
