@@ -4,11 +4,13 @@ import axios from 'axios';
 import '../styles/pages/LetterCreate.css';
 import { API_LETTERS } from '../config';
 
-const LetterCreate = () => {
+const LetterCreate = ({}) => {
     const { userName } = useParams();
     const location = useLocation();
     const ornamentId = location.state?.ornamentId;
+    const ornamentImage = location.state?.ornamentImage;
     const [flipCard, setFlipCard] = useState(false);
+    const [isValid, setIsValid] = useState(false);
     const [formData, setFormData] = useState({
         from: '',
         message: ''
@@ -20,11 +22,13 @@ const LetterCreate = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const [isValid, setIsValid] = useState(false);
-
+     
     useEffect(() => {
         if (formData.from && formData.message) {
             setIsValid(true);
+            console.log(formData)
+            console.log(userName)
+            console.log(ornamentId)
         } else {
             setIsValid(false);
         }
@@ -43,7 +47,7 @@ const LetterCreate = () => {
             const response = await axios.post(API_LETTERS, {
                 content: formData.message,
                 writer: formData.from,
-                iconId: 3,
+                iconId: ornamentId,
                 receiver: userName
             }, {
                 headers: {
@@ -55,7 +59,7 @@ const LetterCreate = () => {
 
             setFlipCard(!flipCard);
             setTimeout(() => {
-                navigate(`/letter/${userName}`, { state: { ornamentId, from: formData.from } });
+                navigate(`/letter/${userName}`, { state: { ornamentId, from: formData.from, ornamentImage } });
             }, 3000);
         } catch (error) {
             console.error('Error sending letter:', error);
